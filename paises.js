@@ -24,15 +24,11 @@ router.get("/listapaises", (req, res) => {
   res.status(200).json(listaPaises);
 });
 
-router.get("/paisesindex/:Nome", (req, res) => {
-  const nome = req.params.Nome;
-  const index = listaPaises.findIndex((item) => item.Nome === nome);
-  if (index == -1) {
-    res.status(204);
-    return;
-  }
+router.get("/paisesindex/:id", (req, res) => {
+  const id = req.params.id-1;
+  const index = listaPaises[id];
   res.status(200).json({ index: index });
-}); //corrigir
+});
 
 router.post("/cadastropais", (req, res) => {
   const pais = req.body;

@@ -3,14 +3,14 @@ const router = express.Router();
 
 const listaEstados = [
   {
-    Estado: "Inglaterra",
+    Pais: "Inglaterra",
     Nome: "Yorksheire",
     Fundacao: "Segunda guerra",
     Populacao: "5.000.000",
     Area: "15.000 km²",
   },
   {
-    Estado: "Brasil",
+    Pais: "Brasil",
     Nome: "São Paulo",
     Fundacao: "1532",
     Populacao: "46.649.132",
@@ -26,23 +26,19 @@ router.get("/listaestados", (req, res) => {
   res.status(200).json(listaEstados);
 });
 
-router.get("/estadosindex/:Nome", (req, res) => {
-  const Nome = req.params.Nome;
-  const index = listaEstados.findIndex((item) => item.Nome === Nome);
-  if (index == -1) {
-    res.status(204);
-    return;
-  }
+router.get("/estadosindex/:id", (req, res) => {
+  const id = req.params.id - 1;
+  const index = listaEstados[id];
   res.status(200).json({ index: index });
-}); //corrigir
+});
 
 router.post("/cadastroestado", (req, res) => {
   const estado = req.body;
 
   if (!estado.Pais) {
-    res
-      .status(400)
-      .json({ message: "Nome do Pais do Estado cadastrado não pode ser vazio!" });
+    res.status(400).json({
+      message: "Nome do Pais do Estado cadastrado não pode ser vazio!",
+    });
     return;
   }
   if (!estado.Nome) {

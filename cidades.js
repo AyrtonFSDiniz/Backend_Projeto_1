@@ -26,25 +26,19 @@ router.get("/listacidades", (req, res) => {
   res.status(200).json(listaCidades);
 });
 
-router.get("/cidadesindex/:Nome", (req, res) => {
-  const Nome = req.params.Nome;
-  const index = listaCidades.findIndex((item) => item.Nome === Nome);
-  if (index == -1) {
-    res.status(204);
-    return;
-  }
+router.get("/cidadesindex/:id", (req, res) => {
+  const id = req.params.id - 1;
+  const index = listaCidades[id];
   res.status(200).json({ index: index });
-}); //corrigir
+});
 
 router.post("/cadastrocidade", (req, res) => {
   const cidade = req.body;
 
   if (!cidade.Pais) {
-    res
-      .status(400)
-      .json({
-        message: "Nome do Pais da Cidade cadastrada não pode ser vazio!",
-      });
+    res.status(400).json({
+      message: "Nome do Pais da Cidade cadastrada não pode ser vazio!",
+    });
     return;
   }
   if (!cidade.Cidade) {
