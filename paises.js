@@ -28,7 +28,7 @@ router.get("/paisesindex/:Nome", (req, res) => {
   const nome = req.params.Nome;
   const index = listaPaises.findIndex((item) => item.Nome === nome);
   if (index == -1) {
-    res.status(204).json({ message: "OK" });;
+    res.status(204);
     return;
   }
   res.status(200).json({ index: index });
