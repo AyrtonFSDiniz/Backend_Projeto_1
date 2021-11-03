@@ -5,15 +5,19 @@ const listaPaises = [
   {
     Nome: "Canada",
     Descobrimento: "1497",
+    Populacao: "38.295.863",
+    Area: "9.985.000 km²",
   },
   {
     Nome: "Irlanda",
     Descobrimento: "1.600 a.C.",
+    Populacao: "4.937.963",
+    Area: "70.273 km²",
   },
 ];
 
 router.get("/", (req, res) => {
-  res.status(200).json({ message: "Rota paises operante" });
+  res.status(200).json({ message: "Rota Países operante" });
 });
 
 router.get("/listapaises", (req, res) => {
@@ -21,10 +25,10 @@ router.get("/listapaises", (req, res) => {
 });
 
 router.get("/paisesindex/:Nome", (req, res) => {
-  const pais = req.params.Nome;
-  const index = listaPaises.findIndex((item) => item.Nome === Nome);
+  const nome = req.params.Nome;
+  const index = listaPaises.findIndex((item) => item.Nome === nome);
   if (index == -1) {
-    res.status(204);
+    res.status(204).json({ message: "OK" });;
     return;
   }
   res.status(200).json({ index: index });
@@ -34,11 +38,27 @@ router.post("/cadastropais", (req, res) => {
   const pais = req.body;
 
   if (!pais.Nome) {
-    res.status(400).json({ message: "Nome do país vazio" });
+    res
+      .status(400)
+      .json({ message: "Nome do País cadastrado não pode ser vazio" });
     return;
   }
   if (!pais.Descobrimento) {
-    res.status(400).json({ message: "Ano do descobrimento vazio" });
+    res
+      .status(400)
+      .json({ message: "Ano do descobrimento cadastrado não pode ser vazio" });
+    return;
+  }
+  if (!pais.Populacao) {
+    res
+      .status(400)
+      .json({ message: "População do País cadastrado não pode ser vazio!" });
+    return;
+  }
+  if (!pais.Area) {
+    res
+      .status(400)
+      .json({ message: "Área do País cadastrado não pode ser vazio!" });
     return;
   }
   listaPaises.push(pais);
